@@ -186,18 +186,19 @@
   }
 }
 
-/* Lot boundary draws in when selected. */
-@keyframes draw-line {
+/* Lot boundary inks in when selected. */
+@keyframes ink-in {
   from {
-    stroke-dashoffset: var(--len, 400);
+    opacity: 0;
+    stroke-width: 10px;
   }
   to {
-    stroke-dashoffset: 0;
+    opacity: 1;
+    stroke-width: 3px;
   }
 }
 .draw-in {
-  stroke-dasharray: var(--len, 400);
-  animation: draw-line 600ms ease-out both;
+  animation: ink-in 450ms ease-out both;
 }
 
 /* The inspector's seal: a short scale-and-settle. */
@@ -239,9 +240,6 @@
   .seal-stamp,
   .progress-slide {
     animation: none;
-  }
-  .draw-in {
-    stroke-dasharray: none;
   }
   * {
     transition-duration: 0ms !important;

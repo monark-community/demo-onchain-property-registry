@@ -193,9 +193,7 @@ export function Plan({
                   fill="none"
                   stroke="var(--primary)"
                   strokeWidth="3"
-                  pathLength={1}
                   className="draw-in"
-                  style={{ ["--len" as string]: 1 }}
                   vectorEffect="non-scaling-stroke"
                 />
               ) : null}

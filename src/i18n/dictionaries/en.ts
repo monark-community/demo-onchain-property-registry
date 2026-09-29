@@ -190,7 +190,7 @@ const en = {
     variance: "Attested with variance",
     disputed: "Disputed",
   },
-  seal: { attested: "Attested", variance: "Variance", disputed: "Disputed", block: "Block" },
+  seal: { attested: "Attested", variance: "Variance", disputed: "Disputed", confirmed: "Confirmed", dismissed: "Dismissed", block: "Block" },
   entryType: {
     construction: "Construction",
     extension: "Extension",
@@ -260,6 +260,7 @@ const en = {
     selectPrompt: "Select a lot on the plan to see its status and latest entries.",
     openRecord: "Open the record",
     entries: "{n} entries",
+    entryOne: "1 entry",
     lastEntry: "Last entry {date}",
   },
   lot: {
@@ -293,7 +294,8 @@ const en = {
     resolution: { confirmed: "Confirmed by inspector", dismissed: "Dismissed by inspector", open: "Open, awaiting an inspector" },
     notFound: "This lot isn't on the plan.",
     structures: "Structures",
-    storeys: "{n} storey(s)",
+    storeys: "{n} storeys",
+    storeyOne: "1 storey",
     showDetails: "Proof and evidence",
   },
   declare: {
@@ -434,6 +436,7 @@ const en = {
     description: "Describe what you saw",
     descriptionHint: "Where on the lot, since when, anything that helps an inspector find it.",
     photo: "Add a photo",
+    samplePhoto: "Use a sample photo",
     submit: "Sign and file the report",
     duplicate: "You already have an open report on this lot.",
     tooShort: "Add a few words so an inspector knows what to look for.",
@@ -450,6 +453,7 @@ const en = {
     malformed: "That's not an entry ID or a transaction hash.",
     unknown: "No entry is anchored under this ID or hash on the demo network.",
     matchTitle: "The record matches its anchor",
+    mismatchTitle: "The record doesn't match its anchor",
     matchBody: "The content hash recomputed from this record is identical to the one anchored in block #{block}.",
     reportTitle: "Report {id}",
     fields: {
@@ -574,7 +578,7 @@ const en = {
     title: "Credits",
     sub: "Photographs are used under the Unsplash License. Everything else on the site, the plan, diagrams and logo, is drawn in code.",
     photo: "Photo by {name} on Unsplash",
-    usedOn: "Used on",
+    usedOn: "Used on:",
     fonts: "Type: Public Sans (USWDS) and IBM Plex Mono, both under the SIL Open Font License. Icons: Lucide (ISC).",
   },
   pricing: {

@@ -7,7 +7,9 @@ export function lt(text: Text, locale: Locale): string {
 }
 
 export function fmtDate(iso: string, locale: Locale, opts: Intl.DateTimeFormatOptions = { dateStyle: "medium" }): string {
-  return new Intl.DateTimeFormat(intlLocale[locale], { timeZone: "America/Toronto", ...opts }).format(new Date(iso))
+  // Date-only values ("2023-08-01") are calendar dates: read them at noon UTC so no time zone shifts the day.
+  const d = new Date(iso.length === 10 ? `${iso}T12:00:00Z` : iso)
+  return new Intl.DateTimeFormat(intlLocale[locale], { timeZone: "America/Toronto", ...opts }).format(d)
 }
 
 export function fmtDateTime(iso: string, locale: Locale): string {

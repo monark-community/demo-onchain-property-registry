@@ -192,7 +192,7 @@ const fr: Dictionary = {
     variance: "Attestée avec dérogation",
     disputed: "Contestée",
   },
-  seal: { attested: "Attesté", variance: "Dérogation", disputed: "Contesté", block: "Bloc" },
+  seal: { attested: "Attesté", variance: "Dérogation", disputed: "Contesté", confirmed: "Confirmé", dismissed: "Rejeté", block: "Bloc" },
   entryType: {
     construction: "Construction",
     extension: "Agrandissement",
@@ -262,6 +262,7 @@ const fr: Dictionary = {
     selectPrompt: "Choisissez un lot sur le plan pour voir son statut et ses dernières inscriptions.",
     openRecord: "Ouvrir le dossier",
     entries: "{n} inscriptions",
+    entryOne: "1 inscription",
     lastEntry: "Dernière inscription le {date}",
   },
   lot: {
@@ -295,7 +296,8 @@ const fr: Dictionary = {
     resolution: { confirmed: "Confirmé par l'inspecteur", dismissed: "Rejeté par l'inspecteur", open: "Ouvert, en attente d'un inspecteur" },
     notFound: "Ce lot n'est pas au plan.",
     structures: "Bâtiments",
-    storeys: "{n} étage(s)",
+    storeys: "{n} étages",
+    storeyOne: "1 étage",
     showDetails: "Preuves et pièces",
   },
   declare: {
@@ -436,6 +438,7 @@ const fr: Dictionary = {
     description: "Décrivez ce que vous avez vu",
     descriptionHint: "À quel endroit du lot, depuis quand, tout ce qui aidera un inspecteur à le trouver.",
     photo: "Ajouter une photo",
+    samplePhoto: "Utiliser une photo d'exemple",
     submit: "Signer et déposer le signalement",
     duplicate: "Vous avez déjà un signalement ouvert sur ce lot.",
     tooShort: "Ajoutez quelques mots pour qu'un inspecteur sache quoi chercher.",
@@ -452,6 +455,7 @@ const fr: Dictionary = {
     malformed: "Ce n'est ni un numéro d'inscription ni une empreinte de transaction.",
     unknown: "Aucune inscription n'est ancrée sous ce numéro ou cette empreinte sur le réseau de démo.",
     matchTitle: "Le dossier correspond à son ancrage",
+    mismatchTitle: "Le dossier ne correspond pas à son ancrage",
     matchBody: "L'empreinte recalculée à partir de ce dossier est identique à celle ancrée dans le bloc no {block}.",
     reportTitle: "Signalement {id}",
     fields: {
@@ -576,7 +580,7 @@ const fr: Dictionary = {
     title: "Crédits",
     sub: "Les photographies sont utilisées sous la licence Unsplash. Tout le reste du site, le plan, les schémas et le logo, est dessiné en code.",
     photo: "Photo de {name} sur Unsplash",
-    usedOn: "Utilisée sur",
+    usedOn: "Utilisée sur :",
     fonts: "Caractères : Public Sans (USWDS) et IBM Plex Mono, sous licence SIL Open Font. Icônes : Lucide (ISC).",
   },
   pricing: {

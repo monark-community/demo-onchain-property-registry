@@ -12,7 +12,9 @@ function truncateAddress(address: string, start = 6, end = 4) {
   return `${address.slice(0, start)}…${address.slice(-end)}`
 }
 
-const avatarPx = { sm: 24, md: 32, lg: 40 } as const
+const noopSubscribe = () => () => {}
+
+const avatarPx ={ sm: 24, md: 32, lg: 40 } as const
 const nameText = { sm: "text-xs", md: "text-sm", lg: "text-base" } as const
 
 type WalletSize = keyof typeof avatarPx
@@ -69,6 +71,11 @@ function WalletAvatar({
   address: string
   size?: number
 }) {
+  const mounted = React.useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  )
   return (
     <div
       data-slot="wallet-avatar"
@@ -77,7 +84,8 @@ function WalletAvatar({
       style={{ width: size, height: size, ...style }}
       {...props}
     >
-      <Jazzicon diameter={size} seed={jsNumberForAddress(address)} />
+      {/* Jazzicon's float maths differ between server and browser: draw it after hydration. */}
+      {mounted ? <Jazzicon diameter={size} seed={jsNumberForAddress(address)} /> : <span className="block size-full bg-muted" />}
     </div>
   )
 }

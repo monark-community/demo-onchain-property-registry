@@ -98,7 +98,7 @@ export function getLot(id: string): Lot | undefined {
 
 /** "2418305" -> "2 418 305", the way Québec cadastre numbers are written. */
 export function formatLotNumber(id: string): string {
-  return id.replace(/^(\d)(\d{3})(\d{3})$/, "$1 $2 $3")
+  return id.replace(/^(\d)(\d{3})(\d{3})$/, "$1 $2 $3")
 }
 
 export function lotAddress(lot: Lot): string {

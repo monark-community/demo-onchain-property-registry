@@ -43,8 +43,8 @@ export function YearScrubber({
           step={1}
           value={[value]}
           onValueChange={([v]) => onChange(v === undefined || v >= max ? null : v)}
-          aria-label={dict.plan.yearLabel}
-          aria-valuetext={label}
+          thumbLabel={dict.plan.yearLabel}
+          thumbValueText={label}
         />
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-2.5 top-4 h-3">
           {marks.map((m) => (
