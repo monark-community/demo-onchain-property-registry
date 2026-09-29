@@ -23,9 +23,6 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
             <NavLinks items={items} variant="tabs" />
           </nav>
           <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
-            <span className="eyebrow rounded-sm border border-dashed border-warning bg-warning-surface px-2 py-1 text-[10px] text-warning">
-              {dict.common.demoBadge}
-            </span>
             <DemoControls />
             <WalletButton className="ml-auto lg:ml-0" />
           </div>

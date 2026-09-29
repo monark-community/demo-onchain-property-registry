@@ -22,6 +22,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="eyebrow mb-3 text-primary">{children}</p>
 }
 
+/** Hero + five sections: problem, signatures, on-chain, FAQ, closing call to action. */
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale: raw } = await params
   const locale = raw as Locale
@@ -33,10 +34,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* Hero */}
       <section className="border-b">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 md:py-14 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-5 lg:pt-6">
-            <Eyebrow>{h.hero.eyebrow}</Eyebrow>
-            <h1 className="text-[2.25rem] leading-[1.05] font-bold sm:text-5xl lg:text-[3.25rem]">{h.hero.title}</h1>
-            <p className="mt-5 max-w-xl text-lg text-muted-foreground">{h.hero.sub}</p>
+          <div className="lg:col-span-5 lg:pt-10">
+            <h1 className="text-[2.5rem] leading-[1.03] font-bold sm:text-5xl lg:text-[3.5rem]">{h.hero.title}</h1>
+            <p className="mt-5 max-w-md text-lg text-muted-foreground">{h.hero.sub}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link href={href(locale, "/app")}>
@@ -48,17 +48,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <Link href={href(locale, "/how-it-works")}>{h.hero.secondary}</Link>
               </Button>
             </div>
-            <div className="mt-10 hidden border-t pt-5 lg:block">
-              <p className="eyebrow text-muted-foreground">{h.hero.tryTitle}</p>
-              <ol className="mt-3 grid gap-3">
-                {h.hero.try.map((tip, i) => (
-                  <li key={tip} className="grid grid-cols-[1.75rem_1fr] text-sm text-muted-foreground">
-                    <span className="font-mono text-primary">0{i + 1}</span>
-                    {tip}
-                  </li>
-                ))}
-              </ol>
-            </div>
           </div>
           <div className="lg:col-span-7">
             <HeroPlan />
@@ -66,7 +55,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Problem */}
+      {/* 1. Problem */}
       <section className="border-b">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-2 lg:items-center">
           <div>
@@ -76,7 +65,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <dl className="mt-8 grid grid-cols-3 border-t">
               {h.problem.facts.map((f, i) => (
                 <div key={f.label} className={i > 0 ? "border-l pt-4 pl-4" : "pt-4 pr-4"}>
-                  <dt className="font-mono text-4xl font-medium text-primary">{f.value}</dt>
+                  <dt className="font-mono text-5xl font-medium text-primary">{f.value}</dt>
                   <dd className="mt-1 text-sm text-muted-foreground">{f.label}</dd>
                 </div>
               ))}
@@ -88,34 +77,17 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Outcomes */}
+      {/* 2. One lot, three signatures */}
       <section className="border-b bg-card">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20">
-          <Eyebrow>{h.outcomes.eyebrow}</Eyebrow>
-          <h2 className="max-w-2xl text-3xl font-bold sm:text-4xl">{h.outcomes.title}</h2>
-          <ol className="mt-10 grid gap-8 md:grid-cols-3 md:gap-0">
-            {h.outcomes.items.map((item, i) => (
-              <li key={item.title} className={i > 0 ? "border-t pt-8 md:border-t-0 md:border-l md:pt-0 md:pl-8" : "md:pr-8"}>
-                <span className="font-mono text-sm text-primary">0{i + 1}</span>
-                <h3 className="mt-3 text-xl font-semibold">{item.title}</h3>
-                <p className="mt-2 text-muted-foreground">{item.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* One lot, three signatures */}
-      <section className="border-b">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-12 lg:items-center">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-md border sm:aspect-[4/3] lg:col-span-5 lg:aspect-[4/5]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-md border lg:col-span-5 lg:aspect-[4/5]">
             <Image src={PHOTOS.surveyor.src} alt={h.signatures.photoAlt} fill sizes="(min-width: 1024px) 500px, 100vw" className="object-cover object-[50%_35%]" />
           </div>
           <div className="lg:col-span-7">
             <Eyebrow>{h.signatures.eyebrow}</Eyebrow>
             <h2 className="text-3xl font-bold sm:text-4xl">{h.signatures.title}</h2>
             <p className="mt-4 max-w-xl text-lg text-muted-foreground">{h.signatures.body}</p>
-            <ol className="mt-8 grid gap-0">
+            <ol className="mt-8 grid">
               {h.signatures.steps.map((s, i) => (
                 <li key={s.title} className="grid grid-cols-[2.5rem_1fr] gap-4 border-t py-5">
                   <span
@@ -127,7 +99,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   <div>
                     <p className="eyebrow text-muted-foreground">{s.role}</p>
                     <h3 className="mt-1 text-lg font-semibold">{s.title}</h3>
-                    <p className="mt-1 text-muted-foreground">{s.body}</p>
+                    <p className="mt-0.5 text-muted-foreground">{s.body}</p>
                   </div>
                 </li>
               ))}
@@ -136,8 +108,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* What goes on-chain */}
-      <section className="border-b bg-card">
+      {/* 3. What goes on-chain */}
+      <section className="border-b">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Eyebrow>{h.onchain.eyebrow}</Eyebrow>
@@ -150,18 +122,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* Aerial band */}
-      <section className="border-b">
-        <div className="relative h-64 sm:h-80 lg:h-96">
-          <Image src={PHOTOS.aerial.src} alt={h.aerial.alt} fill sizes="100vw" className="object-cover" />
-        </div>
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-          <p className="max-w-3xl text-2xl leading-snug font-semibold sm:text-3xl">{h.aerial.line}</p>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="border-b">
+      {/* 4. FAQ */}
+      <section className="border-b bg-card">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Eyebrow>{h.faq.eyebrow}</Eyebrow>
@@ -181,16 +143,24 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 py-14 sm:px-6 md:flex-row md:items-center md:justify-between">
-          <h2 className="text-3xl font-bold sm:text-4xl">{h.cta.title}</h2>
-          <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:text-primary">
-            <Link href={href(locale, "/app")}>
-              {h.cta.button}
-              <ArrowRightIcon aria-hidden="true" />
-            </Link>
-          </Button>
+      {/* 5. Closing call to action over the street it's about */}
+      <section className="relative">
+        <div className="relative h-56 sm:h-72 lg:h-80">
+          <Image src={PHOTOS.aerial.src} alt={h.aerial.alt} fill sizes="100vw" className="object-cover" />
+        </div>
+        <div className="bg-primary text-primary-foreground">
+          <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-primary-foreground/80">{h.aerial.line}</p>
+              <h2 className="mt-1 text-3xl font-bold sm:text-4xl">{h.cta.title}</h2>
+            </div>
+            <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:text-primary">
+              <Link href={href(locale, "/app")}>
+                {h.cta.button}
+                <ArrowRightIcon aria-hidden="true" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </>

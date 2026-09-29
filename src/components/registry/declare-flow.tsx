@@ -16,7 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 
 import { useDemo, useTransaction } from "@/components/demo/demo-provider"
-import { Disclaimer } from "@/components/demo/disclaimer"
+import { InfoTip } from "@/components/registry/info-tip"
 import { TxFeedback } from "@/components/demo/tx-feedback"
 import { Plan } from "@/components/plan/plan"
 import { EvidencePicker } from "@/components/registry/evidence-picker"
@@ -269,7 +269,6 @@ export function DeclareFlow() {
     <div className="border-b pb-6">
       <p className="eyebrow text-primary">{dict.declare.eyebrow}</p>
       <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{dict.declare.title}</h1>
-      <p className="mt-2 max-w-2xl text-muted-foreground">{dict.declare.sub}</p>
     </div>
   )
 
@@ -485,23 +484,24 @@ export function DeclareFlow() {
               <Field label={dict.declare.fields.title} id="d-title">
                 <Input id="d-title" value={f.title} placeholder={defaultTitle} onChange={(e) => set("title", e.target.value)} className="h-10 bg-card" />
               </Field>
-              <Field label={dict.declare.fields.description} id="d-desc" hint={dict.declare.fields.descriptionHint}>
-                <Textarea id="d-desc" rows={3} value={f.description} onChange={(e) => set("description", e.target.value)} className="bg-card" />
+              <Field label={`${dict.declare.fields.description} (${dict.common.optional})`} id="d-desc">
+                <Textarea id="d-desc" rows={3} placeholder={dict.declare.fields.descriptionHint} value={f.description} onChange={(e) => set("description", e.target.value)} className="bg-card" />
               </Field>
             </div>
           ) : null}
 
           {step === 2 ? (
             <div className="grid gap-3">
-              <h2 className="text-lg font-semibold">{dict.declare.evidence.title}</h2>
-              <p className="text-sm text-muted-foreground">{dict.declare.evidence.body}</p>
+              <h2 className="flex items-center gap-1 text-lg font-semibold">
+                {dict.declare.evidence.title}
+                <InfoTip label="IPFS">{dict.declare.evidence.body}</InfoTip>
+              </h2>
               <EvidencePicker
                 value={f.evidence}
                 onChange={(v) => set("evidence", v)}
                 sampleName={t(dict.declare.evidence.sampleName, { lot: lot.civic })}
                 kind="plan"
               />
-              {f.evidence.length === 0 ? <p className="text-sm text-muted-foreground">{dict.declare.evidence.none}</p> : null}
             </div>
           ) : null}
 
@@ -523,10 +523,12 @@ export function DeclareFlow() {
                 <dl className="grid gap-2 p-4 text-sm sm:grid-cols-[9rem_1fr]">
                   <dt className="text-muted-foreground">{dict.lot.evidence}</dt>
                   <dd>{f.evidence.length ? f.evidence.map((e) => e.name).join(", ") : "—"}</dd>
-                  <dt className="text-muted-foreground">{dict.lot.contentHash}</dt>
+                  <dt className="flex items-center gap-0.5 text-muted-foreground">
+                    {dict.lot.contentHash}
+                    <InfoTip label={dict.lot.contentHash}>{dict.declare.review.hashNote}</InfoTip>
+                  </dt>
                   <dd className="font-mono text-xs break-all">{preview.anchor.contentHash}</dd>
                 </dl>
-                <p className="border-t px-4 py-3 text-xs text-muted-foreground">{dict.declare.review.hashNote}</p>
               </div>
 
               {done && tx.phase === "confirmed" ? (
@@ -557,10 +559,7 @@ export function DeclareFlow() {
                   </div>
                 </div>
               ) : (
-                <>
-                  <TxFeedback phase={tx.phase} stage={tx.stage} onRetry={() => void sign()} />
-                  <Disclaimer />
-                </>
+                <TxFeedback phase={tx.phase} stage={tx.stage} onRetry={() => void sign()} />
               )}
             </div>
           ) : null}

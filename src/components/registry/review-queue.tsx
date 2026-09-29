@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useMemo, useRef, useState } from "react"
 
 import { useDemo, useTransaction } from "@/components/demo/demo-provider"
-import { Disclaimer } from "@/components/demo/disclaimer"
 import { TxFeedback } from "@/components/demo/tx-feedback"
 import { Plan } from "@/components/plan/plan"
 import { ZoneFacts } from "@/components/registry/facts"
@@ -121,7 +120,6 @@ export function ReviewQueue() {
         <div>
           <p className="eyebrow text-primary">{dict.review.eyebrow}</p>
           <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{dict.review.title}</h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">{dict.review.sub}</p>
         </div>
         {hydrated && !isInspector ? (
           <div className="flex max-w-md flex-col gap-2 rounded-md border border-dashed bg-card p-3 text-sm">
@@ -334,7 +332,7 @@ export function ReviewQueue() {
                 <p className="text-sm text-muted-foreground">{dict.review.readOnly}</p>
               ) : (
                 <div className="grid gap-3">
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 [&>button]:min-h-10">
                     {entry ? (
                       <>
                         <Button onClick={() => void decide(check && check.added.length ? "variance" : "attested")} disabled={tx.busy}>
@@ -355,7 +353,6 @@ export function ReviewQueue() {
                       </>
                     )}
                   </div>
-                  <Disclaimer />
                 </div>
               )}
             </article>

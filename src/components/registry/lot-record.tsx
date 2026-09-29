@@ -9,6 +9,7 @@ import { PlanLegend } from "@/components/plan/legend"
 import { Plan } from "@/components/plan/plan"
 import { YearScrubber } from "@/components/plan/year-scrubber"
 import { ZoneFacts } from "@/components/registry/facts"
+import { InfoTip } from "@/components/registry/info-tip"
 import { ReportDialog } from "@/components/registry/report-dialog"
 import { Seal } from "@/components/registry/seal"
 import { Signer } from "@/components/registry/signer"
@@ -83,7 +84,7 @@ export function LotRecord({ lotId }: { lotId: string }) {
           <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{lotAddress(lot)}</h1>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <StatusBadge status={current.status} label={dict.status[current.status]} size="lg" />
-            <span className="text-sm text-muted-foreground">{dict.statusHelp[current.status]}</span>
+            <InfoTip label={dict.status[current.status]}>{dict.statusHelp[current.status]}</InfoTip>
           </div>
           <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
             <span>
@@ -182,7 +183,6 @@ export function LotRecord({ lotId }: { lotId: string }) {
         <h2 id="lot-record" className="text-2xl font-bold">
           {dict.lot.timelineTitle}
         </h2>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{dict.lot.timelineSub}</p>
         {items.length === 0 ? (
           <p className="mt-4 rounded-md border border-dashed p-5 text-muted-foreground">{dict.lot.noEntries}</p>
         ) : (
@@ -255,7 +255,7 @@ function EntryCard({ entry, dim, me }: { entry: Entry; dim: boolean; me?: string
                   </span>
                 ) : null}
               </p>
-              {lt(entry.description, locale) ? <p className="mt-2 max-w-2xl text-sm">{lt(entry.description, locale)}</p> : null}
+              {entry.source !== "archive" && lt(entry.description, locale) ? <p className="mt-2 max-w-2xl text-sm">{lt(entry.description, locale)}</p> : null}
               <p className="mt-3 text-xs text-muted-foreground">{dict.lot.by}</p>
               <Signer address={entry.submitter} role={entry.role} you={me === entry.submitter} />
             </div>
@@ -271,7 +271,7 @@ function EntryCard({ entry, dim, me }: { entry: Entry; dim: boolean; me?: string
             ) : null}
           </div>
 
-          {d ? (
+          {d && entry.source === "archive" ? null : d ? (
             <div className={cn("mt-3 flex gap-3 rounded-sm border-l-2 bg-background p-3", d.verdict === "disputed" ? "border-destructive" : "border-primary")}>
               <Seal
                 verdict={d.verdict}

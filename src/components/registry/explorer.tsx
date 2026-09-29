@@ -148,7 +148,6 @@ export function Explorer() {
               <div className="mt-2">
                 <StatusBadge status={sel.status} label={dict.status[sel.status]} />
               </div>
-              <p className="mt-2 text-sm text-muted-foreground">{dict.statusHelp[sel.status]}</p>
               <div className="mt-3 grid gap-2.5 border-t pt-3">
                 {lotEntries(state, sel.lot.id)
                   .filter((e) => asOf === null || `${e.effective}T00:00:00Z` <= asOf)

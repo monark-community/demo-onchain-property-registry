@@ -26,6 +26,13 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <div className="hidden items-center gap-2 md:flex">
+            <span
+              title={dict.common.demoBadge}
+              className="inline-flex h-7 items-center gap-1.5 rounded-full border border-dashed border-warning bg-warning-surface px-2.5 text-xs font-semibold text-warning"
+            >
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-warning" />
+              {dict.common.demoChip}
+            </span>
             <LocaleSwitch locale={locale} label={dict.common.language.label} names={names} />
             <ThemeToggle label={dict.common.theme.toggle} />
             <HeaderAction href={action.href} label={action.label} appPrefix={href(locale, "/app")} />

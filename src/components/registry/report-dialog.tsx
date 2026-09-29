@@ -4,7 +4,6 @@ import { FlagIcon } from "lucide-react"
 import { useState } from "react"
 
 import { useDemo, useTransaction } from "@/components/demo/demo-provider"
-import { Disclaimer } from "@/components/demo/disclaimer"
 import { TxFeedback } from "@/components/demo/tx-feedback"
 import { EvidencePicker } from "@/components/registry/evidence-picker"
 import { Button } from "@/components/ui/button"
@@ -110,7 +109,6 @@ export function ReportDialog({ lot, trigger }: { lot: Lot; trigger?: React.React
               void submit()
             }}
           >
-            <p className="text-sm text-muted-foreground">{dict.report.sub}</p>
             <fieldset className="grid gap-2">
               <legend className="mb-2 text-sm font-medium">{dict.report.category}</legend>
               {CATEGORIES.map((c) => (
@@ -133,12 +131,15 @@ export function ReportDialog({ lot, trigger }: { lot: Lot; trigger?: React.React
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
-                aria-describedby="report-description-hint"
+                placeholder={dict.report.descriptionHint}
+                aria-describedby={error ? "report-description-error" : undefined}
                 aria-invalid={error ? true : undefined}
               />
-              <p id="report-description-hint" className={cn("text-xs", error ? "text-destructive" : "text-muted-foreground")}>
-                {error ?? dict.report.descriptionHint}
-              </p>
+              {error ? (
+                <p id="report-description-error" className="text-xs text-destructive">
+                  {error}
+                </p>
+              ) : null}
             </div>
             <div className="grid gap-1.5">
               <span className="text-sm font-medium">
@@ -147,7 +148,6 @@ export function ReportDialog({ lot, trigger }: { lot: Lot; trigger?: React.React
               <EvidencePicker value={evidence} onChange={setEvidence} sampleName={`photo-${lot.civic}.jpg`} kind="photo" chooseLabel={dict.report.photo} sampleLabel={dict.report.samplePhoto} />
             </div>
             <TxFeedback phase={tx.phase} stage={tx.stage} onRetry={() => void submit()} />
-            <Disclaimer />
             <Button type="submit" disabled={tx.busy}>
               {dict.report.submit}
             </Button>

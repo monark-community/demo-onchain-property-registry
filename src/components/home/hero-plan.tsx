@@ -55,7 +55,6 @@ export function HeroPlan() {
           </div>
           <StatusBadge status={snap.status} label={dict.status[snap.status]} />
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">{dict.statusHelp[snap.status]}</p>
         <div className="mt-3 grid gap-2.5 border-t pt-3">
           {entries.map((e) => (
             <EntryLine key={e.id} entry={e} dict={dict} locale={locale} asOf={asOf} />

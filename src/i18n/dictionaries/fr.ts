@@ -11,6 +11,7 @@ const fr: Dictionary = {
   common: {
     skip: "Aller au contenu",
     demoBadge: "Démo · données simulées",
+    demoChip: "Démo",
     signingNotice: "Démo sur testnet · pas un avis juridique · aucune inscription réelle",
     feeSponsored: "Frais de réseau payés par Val-des-Ormes",
     close: "Fermer",
@@ -55,64 +56,40 @@ const fr: Dictionary = {
     hero: {
       eyebrow: "Registre foncier public",
       title: "Ce qui a été bâti, quand, et qui l'a validé.",
-      sub: "Cadastrum est le registre public de chaque lot et de chaque bâtiment qui s'y trouve. Les propriétaires déclarent leurs travaux, les inspecteurs les attestent et chaque inscription est ancrée on-chain : tout le monde peut vérifier un immeuble avant d'acheter, de louer ou de construire.",
+      sub: "Le registre public de chaque lot. Les propriétaires déclarent, les inspecteurs attestent, et chaque inscription est ancrée on-chain.",
       primary: "Ouvrir le registre",
       secondary: "Comment naît une inscription",
-      planCaption: "Quartier du Moulin, Val-des-Ormes. Faites glisser les années pour voir le quartier changer.",
+      planCaption: "Faites glisser les années : le quartier change sous vos yeux.",
       selectedLabel: "Lot sélectionné",
       openRecord: "Ouvrir le dossier",
       latest: "Dernières inscriptions",
-      tryTitle: "À essayer sur le plan",
-      try: [
-        "Ramenez l'année à 2022 : l'agrandissement derrière le 36, rue des Érables disparaît.",
-        "Choisissez le 17, rue du Moulin : une remise à 0,6 m de la ligne, acceptée par dérogation.",
-        "Suivez le 120, avenue Beaulieu depuis 1931 : une fonderie, une démolition, un nouveau zonage, un immeuble neuf.",
-      ],
     },
     problem: {
       eyebrow: "Le problème",
       title: "L'histoire d'un lot dort dans quatre classeurs.",
-      body: "Les permis sont à l'hôtel de ville, le cadastre au registre foncier, les rapports d'inspection dans un cartable, et le reste dans la mémoire du vendeur. Quand ils se contredisent, c'est l'acheteur qui l'apprend en dernier.",
+      body: "Quand le service des permis, le cadastre et le vendeur se contredisent, l'acheteur l'apprend en dernier.",
       facts: [
-        { value: "4", label: "endroits que le notaire doit consulter pour une seule maison" },
-        { value: "0", label: "d'entre eux montrent qui a modifié un dossier, et quand" },
-        { value: "1", label: "registre public, si chaque changement est déclaré et signé" },
+        { value: "4", label: "endroits à consulter par le notaire pour une maison" },
+        { value: "0", label: "d'entre eux montrent qui a changé quoi, et quand" },
+        { value: "1", label: "registre public avec Cadastrum" },
       ],
       photoAlt: "Une charpente de maison en construction, vue du dessus",
-    },
-    outcomes: {
-      eyebrow: "Ce qui change",
-      title: "Un seul dossier, vérifiable par tous.",
-      items: [
-        {
-          title: "Sachez ce que vous achetez",
-          body: "Chaque bâtiment d'un lot, depuis quand il existe, qui l'a déclaré et si un inspecteur l'a attesté.",
-        },
-        {
-          title: "Déclarez une fois pour toutes",
-          body: "Votre agrandissement, ses plans et son attestation, vérifiables par chaque futur acheteur, assureur ou prêteur.",
-        },
-        {
-          title: "Personne ne réécrit le dossier",
-          body: "Chaque inscription est signée par un rôle identifié et ancrée on-chain. Une correction est une nouvelle inscription, jamais un effacement.",
-        },
-      ],
     },
     signatures: {
       eyebrow: "Comment naît une inscription",
       title: "Un lot, trois signatures.",
-      body: "La propriétaire déclare. L'inspecteur atteste. La voisine peut signaler. Chaque signature reste au dossier : qui, à quel titre, et quand.",
+      body: "Chacune reste au dossier : qui, à quel titre, et quand.",
       steps: [
-        { role: "Propriétaire", title: "Déclare les travaux", body: "Ce qui a été bâti, ses dimensions et ses plans, avant ou après les travaux. Le lot passe en révision." },
-        { role: "Inspecteur", title: "Atteste ou conteste", body: "Il compare avec le zonage et les lieux, puis signe : attesté, attesté avec dérogation, ou contesté avec un motif." },
-        { role: "Résidente", title: "Signale ce qui manque", body: "Un signalement signé d'un bâtiment non déclaré ouvre une révision publique. Un seul signalement ouvert par personne et par lot." },
+        { role: "Propriétaire", title: "Déclare les travaux", body: "Ce qui a été bâti, avec ses dimensions et ses plans." },
+        { role: "Inspecteur", title: "Atteste ou conteste", body: "Il compare avec le zonage et les lieux, puis signe." },
+        { role: "Résidente", title: "Signale ce qui manque", body: "Un signalement signé ouvre une révision publique." },
       ],
       photoAlt: "Un arpenteur en dossard réfléchissant qui vise dans un niveau, dans une rue en ville",
     },
     onchain: {
       eyebrow: "Ce qui va on-chain",
       title: "La preuve, sans l'exposition.",
-      body: "L'empreinte de l'inscription, le signataire et l'heure vont on-chain. Les plans et les photos vont sur IPFS, et seule leur empreinte est ancrée. Les renseignements personnels ne vont ni sur l'un ni sur l'autre.",
+      body: "Une empreinte, un signataire et une heure on-chain. Les fichiers sur IPFS. Les renseignements personnels, nulle part.",
       entry: "Inscription",
       entryItems: ["Lot et changement", "Dimensions", "Numéro de permis", "Description"],
       files: "Plans et photos",
@@ -124,7 +101,7 @@ const fr: Dictionary = {
       offchainItems: ["Nom des propriétaires", "Coordonnées"],
     },
     aerial: {
-      line: "Chaque lot de cette rue a une histoire. Cadastrum l'écrit là où tout le monde peut la lire.",
+      line: "Chaque lot de cette rue a une histoire.",
       alt: "Vue aérienne d'une trame de rues résidentielles avec maisons, cours et arbres",
     },
     faq: {
@@ -148,12 +125,8 @@ const fr: Dictionary = {
           a: "Non. La chaîne contient une empreinte, une adresse de portefeuille et un rôle. Les noms et coordonnées restent à la municipalité.",
         },
         {
-          q: "Faut-il payer pour déclarer ?",
-          a: "Non. La municipalité paie les frais de réseau des déclarations, attestations et signalements.",
-        },
-        {
           q: "Puis-je m'y fier pour un achat ?",
-          a: "Pas dans cette démo : la ville, les lots et les personnes sont fictifs, et rien ici n'est un avis juridique. En production, une inscription attestée est une preuve à apporter à votre notaire, pas un substitut.",
+          a: "Pas dans cette démo : la ville et ses habitants sont fictifs. En production, une inscription attestée est une preuve pour votre notaire, pas un substitut.",
         },
       ],
     },
@@ -352,7 +325,7 @@ const fr: Dictionary = {
       title: "Vérification du zonage",
       fits: "Respecte le zonage",
       breaks: "Hors zonage : {rules}",
-      breaksHelp: "Vous pouvez quand même déclarer. Un inspecteur décidera si une dérogation est possible ou contestera.",
+      breaksHelp: "Vous pouvez quand même déclarer ; l'inspecteur décidera.",
       coverageOf: "{value} sur {max} permis",
       before: "Avant",
       after: "Après",
@@ -526,7 +499,7 @@ const fr: Dictionary = {
   how: {
     eyebrow: "Fonctionnement",
     title: "Comment naît une inscription, et pourquoi s'y fier",
-    sub: "Cadastrum ne remplace ni le cadastre ni le service des permis. Il garde ce qu'ils n'ont pas : un historique public et signé de ce qui se passe sur chaque lot.",
+    sub: "Pas un nouveau cadastre : un historique public et signé de ce qui se passe sur chaque lot.",
     lifecycle: {
       title: "La vie d'une inscription",
       body: "Chaque changement suit le même chemin. Rien n'est modifié après l'ancrage ; chaque étape est une nouvelle inscription signée.",
@@ -553,15 +526,15 @@ const fr: Dictionary = {
     },
     zoning: {
       title: "Les règles de zonage de la démo",
-      body: "Chaque changement est mesuré sur le plan lui-même : le taux d'occupation est l'emprise des bâtiments sur la superficie du lot ; les marges sont la distance entre chaque bâtiment et les lignes de lot. Les garages, remises et ateliers n'ont besoin que de 1 m des lignes latérales et arrière.",
+      body: "Mesuré sur le plan lui-même. Garages, remises et ateliers : 1 m des lignes latérales et arrière suffit.",
       headers: ["Zone", "Usage", "Occupation", "Hauteur", "Logements", "Marges (avant / latérale / arrière)"],
     },
     storage: {
       title: "Ce qui est conservé, et où",
       items: [
-        { title: "On-chain", body: "L'empreinte de l'inscription, l'adresse et le rôle du signataire, le bloc et l'heure. Assez pour prouver que le dossier n'a pas été modifié, rien de plus." },
-        { title: "IPFS", body: "Plans, photos et rapports d'inspection. Adressés par leur contenu : un fichier modifié obtient un autre CID." },
-        { title: "La municipalité", body: "Les noms, les coordonnées et le lien entre portefeuilles et personnes. Jamais publiés." },
+        { title: "On-chain", body: "Empreinte, signataire et rôle, bloc et heure. Assez pour prouver que rien n'a changé." },
+        { title: "IPFS", body: "Plans, photos et rapports d'inspection. Un fichier modifié obtient un autre CID." },
+        { title: "La municipalité", body: "Noms, coordonnées, et qui détient quel portefeuille. Jamais publiés." },
       ],
     },
     limits: {

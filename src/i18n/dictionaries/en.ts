@@ -9,6 +9,7 @@ const en = {
   common: {
     skip: "Skip to content",
     demoBadge: "Demo · simulated data",
+    demoChip: "Demo",
     signingNotice: "Testnet demo · not legal advice · no real records",
     feeSponsored: "Network fee sponsored by Val-des-Ormes",
     close: "Close",
@@ -53,64 +54,40 @@ const en = {
     hero: {
       eyebrow: "Public property registry",
       title: "What was built, when, and who signed off.",
-      sub: "Cadastrum is the public record of every lot and every structure on it. Owners declare changes, inspectors attest them, and each entry is anchored on-chain, so anyone can check a property before they buy, rent or build.",
+      sub: "The public record of every lot. Owners declare changes, inspectors sign them off, and every entry is anchored on-chain.",
       primary: "Open the registry",
       secondary: "How a record is made",
-      planCaption: "Quartier du Moulin, Val-des-Ormes. Drag the years to see the neighbourhood change.",
+      planCaption: "Drag the years and watch the neighbourhood change.",
       selectedLabel: "Selected lot",
       openRecord: "Open the record",
       latest: "Latest entries",
-      tryTitle: "Things to try on the plan",
-      try: [
-        "Drag the year back to 2022: the extension behind 36 rue des Érables disappears.",
-        "Select 17 rue du Moulin: a shed 0.6 m from the line, accepted as a variance.",
-        "Follow 120 avenue Beaulieu from 1931: a foundry, a demolition, a rezoning, a new building.",
-      ],
     },
     problem: {
       eyebrow: "The problem",
       title: "A lot's story is in four filing cabinets.",
-      body: "Permits sit at city hall, the cadastre at the land registry, inspection reports in a binder, and the rest in the seller's memory. When they disagree, the buyer finds out last.",
+      body: "When the permit office, the cadastre and the seller disagree, the buyer finds out last.",
       facts: [
-        { value: "4", label: "places a buyer's notary has to check for one house" },
-        { value: "0", label: "of them show who changed a record, and when" },
-        { value: "1", label: "public record, if every change is declared and signed" },
+        { value: "4", label: "places a notary checks for one house" },
+        { value: "0", label: "of them show who changed what, and when" },
+        { value: "1", label: "public record in Cadastrum" },
       ],
       photoAlt: "A house frame under construction, seen from directly above",
-    },
-    outcomes: {
-      eyebrow: "What changes",
-      title: "One record everyone can check.",
-      items: [
-        {
-          title: "Know what you're signing for",
-          body: "Every structure on a lot, when it appeared, who declared it and whether an inspector signed it off.",
-        },
-        {
-          title: "Declare once, for good",
-          body: "Your extension, its plans and its attestation, checkable by every future buyer, insurer or lender.",
-        },
-        {
-          title: "Nobody rewrites the file",
-          body: "Every entry is signed by a named role and anchored on-chain. Corrections are new entries, never overwrites.",
-        },
-      ],
     },
     signatures: {
       eyebrow: "How a record is made",
       title: "One lot, three signatures.",
-      body: "The owner declares. The inspector attests. The neighbour can report. Each signature stays on the record, with who, in what role and when.",
+      body: "Each one stays on the record: who, in what role, and when.",
       steps: [
-        { role: "Owner", title: "Declares the change", body: "What was built, its size and its plans, before or after the work. The lot shows it as under review." },
-        { role: "Inspector", title: "Attests or disputes", body: "Checks it against the zone and the site, then signs: attested, attested with a variance, or disputed with a reason." },
-        { role: "Resident", title: "Reports what's missing", body: "A signed report of an undeclared structure opens a review in the open. One open report per person per lot." },
+        { role: "Owner", title: "Declares the change", body: "What was built, with its size and plans." },
+        { role: "Inspector", title: "Attests or disputes", body: "Checks it against the zone and the site, then signs." },
+        { role: "Resident", title: "Reports what's missing", body: "A signed report opens a review in the open." },
       ],
       photoAlt: "A surveyor in a high-visibility vest looking through a level on a city street",
     },
     onchain: {
       eyebrow: "What goes on-chain",
       title: "Proof without exposure.",
-      body: "The entry's content hash, the signer and the time go on-chain. Plans and photos go to IPFS, and only their fingerprint is anchored. Personal details stay off both.",
+      body: "A hash, a signer and a time on-chain. Files on IPFS. Personal details on neither.",
       entry: "Entry",
       entryItems: ["Lot and change", "Dimensions", "Permit number", "Description"],
       files: "Plans and photos",
@@ -122,7 +99,7 @@ const en = {
       offchainItems: ["Owner names", "Contact details"],
     },
     aerial: {
-      line: "Every lot on this street has a history. Cadastrum writes it down where everyone can read it.",
+      line: "Every lot on this street has a history.",
       alt: "Aerial view of a residential street grid with houses, yards and trees",
     },
     faq: {
@@ -146,12 +123,8 @@ const en = {
           a: "No. The chain holds a content hash, a wallet address and a role. Names and contact details stay with the municipality.",
         },
         {
-          q: "Do I pay a fee to declare something?",
-          a: "No. The municipality sponsors the network fees for declarations, attestations and reports.",
-        },
-        {
           q: "Can I rely on this for a purchase?",
-          a: "Not in this demo: the town, lots and people are fictional and nothing here is legal advice. In production, an attested entry is evidence to bring to your notary, not a substitute for one.",
+          a: "Not in this demo: the town and its people are fictional. In production, an attested entry is evidence for your notary, not a substitute.",
         },
       ],
     },
@@ -350,7 +323,7 @@ const en = {
       title: "Zoning check",
       fits: "Fits the zone",
       breaks: "Outside the zone: {rules}",
-      breaksHelp: "You can still declare it. An inspector decides whether a variance is possible or disputes it.",
+      breaksHelp: "You can still declare it; the inspector decides.",
       coverageOf: "{value} of {max} allowed",
       before: "Before",
       after: "After",
@@ -524,7 +497,7 @@ const en = {
   how: {
     eyebrow: "How it works",
     title: "How a record is made, and why you can trust it",
-    sub: "Cadastrum doesn't replace the cadastre or the permit office. It keeps the one thing they don't: a public, signed history of what happens on each lot.",
+    sub: "Not a new cadastre: a public, signed history of what happens on each lot.",
     lifecycle: {
       title: "The life of an entry",
       body: "Every change follows the same path. Nothing is edited after it's anchored; each step is a new signed record.",
@@ -551,15 +524,15 @@ const en = {
     },
     zoning: {
       title: "The zoning rules used by the demo",
-      body: "Each change is measured on the plan itself: coverage is the buildings' footprint over the lot area; setbacks are the distance from each building to the lot lines. Garages, sheds and workshops only need 1 m from side and rear lines.",
+      body: "Measured on the plan itself. Garages, sheds and workshops need only 1 m from side and rear lines.",
       headers: ["Zone", "Use", "Coverage", "Height", "Units", "Setbacks (front / side / rear)"],
     },
     storage: {
       title: "What's stored where",
       items: [
-        { title: "On-chain", body: "The entry's content hash, the signer's address and role, the block and the time. Enough to prove the record wasn't altered, nothing more." },
-        { title: "IPFS", body: "Plans, photos and inspection reports. Addressed by their content, so a changed file gets a different CID." },
-        { title: "The municipality", body: "Names, contact details and the link between wallets and people. Never published." },
+        { title: "On-chain", body: "Content hash, signer and role, block and time. Enough to prove nothing was altered." },
+        { title: "IPFS", body: "Plans, photos and inspection reports. A changed file gets a different CID." },
+        { title: "The municipality", body: "Names, contact details, and which wallet is whom. Never published." },
       ],
     },
     limits: {
