@@ -1,0 +1,249 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Cadastrum identity ("Surveyor's plat, signed in ink"), laid over the
+ * @monark/ui base theme: the variable structure is the registry's, every
+ * colour, the radius and the fonts are Cadastrum's own (docs/site-plan.md §8).
+ */
+@theme inline {
+  --radius: 0.25rem;
+  --font-sans: var(--font-public-sans), "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger-surface: var(--danger-surface);
+  --color-ok-surface: var(--ok-surface);
+  --color-plan-ground: var(--plan-ground);
+  --color-plan-road: var(--plan-road);
+  --color-plan-park: var(--plan-park);
+  --color-plan-building: var(--plan-building);
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.5);
+  --radius-xl: calc(var(--radius) * 2);
+  --radius-2xl: calc(var(--radius) * 2.5);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
+}
+
+:root {
+  --background: #f4f1e8;
+  --foreground: #1c211e;
+  --card: #fbf9f4;
+  --card-foreground: #1c211e;
+  --popover: #fbf9f4;
+  --popover-foreground: #1c211e;
+  --primary: #1f5a46;
+  --primary-foreground: #f7f4ea;
+  --secondary: #e9e4d6;
+  --secondary-foreground: #1c211e;
+  --muted: #e9e4d6;
+  --muted-foreground: #565b52;
+  --accent: #e7dec6;
+  --accent-foreground: #1c211e;
+  --destructive: #a3301d;
+  --destructive-foreground: #fbf9f4;
+  --border: #cfc7b1;
+  --input: #bfb69d;
+  --ring: #1f5a46;
+  --warning: #7a4e00;
+  --warning-surface: #f3e3b5;
+  --danger-surface: #f4d9d1;
+  --ok-surface: #d8e7de;
+  --chart-1: #1f5a46;
+  --chart-2: #b07d12;
+  --chart-3: #a3301d;
+  --chart-4: #4e6470;
+  --chart-5: #7a5a3e;
+  --plan-ground: #efeadc;
+  --plan-road: #e2dccb;
+  --plan-park: #dde3cf;
+  --plan-building: #c9bfa6;
+  --sidebar: #fbf9f4;
+  --sidebar-foreground: #1c211e;
+  --sidebar-primary: #1f5a46;
+  --sidebar-primary-foreground: #f7f4ea;
+  --sidebar-accent: #e7dec6;
+  --sidebar-accent-foreground: #1c211e;
+  --sidebar-border: #cfc7b1;
+  --sidebar-ring: #1f5a46;
+}
+
+.dark {
+  --background: #131713;
+  --foreground: #ece8dc;
+  --card: #1a1f1a;
+  --card-foreground: #ece8dc;
+  --popover: #1a1f1a;
+  --popover-foreground: #ece8dc;
+  --primary: #86c9aa;
+  --primary-foreground: #0e1a13;
+  --secondary: #232a23;
+  --secondary-foreground: #ece8dc;
+  --muted: #232a23;
+  --muted-foreground: #a9ad9f;
+  --accent: #2d3429;
+  --accent-foreground: #ece8dc;
+  --destructive: #ee8a75;
+  --destructive-foreground: #1a0c08;
+  --border: #353d33;
+  --input: #4a5347;
+  --ring: #86c9aa;
+  --warning: #e9c46a;
+  --warning-surface: #3a2f12;
+  --danger-surface: #3d1f18;
+  --ok-surface: #1d3329;
+  --chart-1: #86c9aa;
+  --chart-2: #e0b04a;
+  --chart-3: #ee8a75;
+  --chart-4: #9db3be;
+  --chart-5: #c9a57f;
+  --plan-ground: #181d18;
+  --plan-road: #252b24;
+  --plan-park: #1f2a1f;
+  --plan-building: #4a4f45;
+  --sidebar: #1a1f1a;
+  --sidebar-foreground: #ece8dc;
+  --sidebar-primary: #86c9aa;
+  --sidebar-primary-foreground: #0e1a13;
+  --sidebar-accent: #2d3429;
+  --sidebar-accent-foreground: #ece8dc;
+  --sidebar-border: #353d33;
+  --sidebar-ring: #86c9aa;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-feature-settings: "tnum" 0;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Small uppercase annotation lettering, like the labels on a survey plan. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .paper-rule {
+    background-image: linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+/* Lot boundary draws in when selected. */
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--len, 400);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.draw-in {
+  stroke-dasharray: var(--len, 400);
+  animation: draw-line 600ms ease-out both;
+}
+
+/* The inspector's seal: a short scale-and-settle. */
+@keyframes seal-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.6) rotate(-18deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+.seal-stamp {
+  animation: seal-stamp 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.seal-rest {
+  transform: rotate(-8deg);
+}
+
+@keyframes progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+.progress-slide {
+  animation: progress-slide 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-in,
+  .seal-stamp,
+  .progress-slide {
+    animation: none;
+  }
+  .draw-in {
+    stroke-dasharray: none;
+  }
+  * {
+    transition-duration: 0ms !important;
+  }
+}
