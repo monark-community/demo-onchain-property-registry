@@ -1,6 +1,6 @@
 # Cadastrum: site plan
 
-Status: written before the build, and kept in sync with what shipped (see §12 for implementation decisions made along the way).
+Status: shipped on `develop`. Written before the build and updated to describe what shipped (see §12 for decisions made along the way).
 
 - Product: **Cadastrum**, a public, on-chain registry of land parcels and the buildings on them.
 - Authoritative description: https://www.monark.io/en/project/onchain-property-registry
@@ -58,7 +58,7 @@ Supporting benefits, as outcomes:
 ## 3. Hero
 
 - **Headline (8 words):** "What was built, when, and who signed off." / FR: « Ce qui a été bâti, quand, et qui l'a validé. »
-- **Subheadline:** "Cadastrum is the public record of every lot and every structure on it. Owners declare changes, inspectors attest them, and each entry is anchored on-chain, so anyone can check a property before they buy, rent or build." / FR: « Cadastrum est le registre public de chaque lot et de chaque bâtiment qui s'y trouve. Les propriétaires déclarent leurs travaux, les inspecteurs les attestent et chaque inscription est ancrée on-chain : tout le monde peut vérifier un immeuble avant d'acheter, de louer ou de construire. »
+- **Subheadline:** "The public record of every lot. Owners declare changes, inspectors sign them off, and every entry is anchored on-chain." / FR : « Le registre public de chaque lot. Les propriétaires déclarent, les inspecteurs attestent, et chaque inscription est ancrée on-chain. »
 - **Primary CTA:** "Open the registry" → `/{locale}/app`. FR « Ouvrir le registre ».
 - **Secondary CTA:** "How a record is made" → `/{locale}/how-it-works`. FR « Comment naît une inscription ».
 - **Hero visual: the product itself.** A live, server-rendered plan of the demo neighbourhood (the same SVG the registry uses), with one lot drawn out and a year scrubber under it. Dragging from 1931 to 2026 grows and removes structures and recolours lots by their compliance at that date; the selected lot's latest entries sit beside the plan. It's the one thing a photo can't show: a lot's history over time. The hero opens on 2026 with lot *2 418 305* (the unrecorded extension) highlighted, so the first thing a visitor reads is a violation that a buyer would want to know about.
@@ -69,7 +69,7 @@ All routes live under `/{locale}` (`en`, `fr`); `/` redirects to the visitor's p
 
 | Route | Purpose | Sections, in order |
 |-|-|-|
-| `/` | Make the case in one scroll and send people into the registry. | Hero (headline, CTAs, live plan with year scrubber) · "A lot's story is in four filing cabinets" (the problem, three short facts) · Three outcomes · "One lot, three signatures" (owner declares → inspector attests → neighbour reports, with the surveyor photo) · "What goes on-chain" (small diagram: entry → content hash → anchor; files → IPFS CID) · aerial photo band with one line · FAQ (6) · closing CTA band |
+| `/` | Make the case in one scroll and send people into the registry. | Hero (headline, one line, two CTAs, live plan with year scrubber and the selected lot's latest entries) · then five sections: 1. "A lot's story is in four filing cabinets" (one line, three numbers, photo) · 2. "One lot, three signatures" (owner → inspector → resident, surveyor photo) · 3. "What goes on-chain" (diagram) · 4. FAQ (5) · 5. closing CTA under the aerial photo |
 | `/app` | **Registry explorer.** Search by address or lot number, browse the plan, see recent entries. | Search bar · plan with legend, year scrubber and status filter · lot list (accessible alternative to the plan) · recent entries across the registry |
 | `/app/lots/[id]` | **Lot record.** The page a buyer, notary or inspector opens. | Header (address, lot number, zone, area, compliance verdict) · actions (declare a change, report an irregularity, copy link) · lot plan (boundary, setback envelope, footprints, year scrubber) · facts vs zoning (coverage, height, units, setbacks) · entry timeline with attestations, anchors and evidence |
 | `/app/declare` | **Declare a change** (owner flow). | Stepper: what changed → details with live plan and zoning check → evidence (IPFS) → review and sign → result |
@@ -80,7 +80,7 @@ All routes live under `/{locale}` (`en`, `fr`); `/` redirects to the visitor's p
 | `/pricing` | **Internal strategy review only.** Never linked, excluded from the sitemap, `noindex, nofollow`. | Three tiers, rationale, assumptions |
 | 404 | Localized not-found with a route back to the registry and search. | |
 
-**Header** (sticky, 60px): Cadastrum logo · links "Registry" (`/app`) and "How it works" · EN/FR switch · theme toggle · primary action ("Open the registry" on marketing pages; the connect-wallet control inside `/app`). Inside `/app` a second bar holds the app's sections (Explore, Declare, Review, Verify), the "Demo · simulated data" badge and demo controls. Mobile: logo + menu button opening a full-height sheet with links, switches and the action.
+**Header** (sticky, 60px, the only top bar on marketing pages): Cadastrum logo · links "Registry" (`/app`) and "How it works" · a small "Demo" chip · EN/FR switch · theme toggle · primary action "Open the registry" (hidden inside `/app`, where the wallet takes its place). Inside `/app` one compact app bar holds the sections (Explore, Declare, Review, Verify), the Demo controls and the connect-wallet control. Mobile: logo + menu button opening a full-height sheet with links, the demo notice, switches and the action.
 
 **Footer:** one-line description · links (Registry, How it works, Verify an entry, Credits) · "Demo · simulated data · Val-des-Ormes is a fictional municipality" · photo credit link · "Built with Monark" credit (muted, 12–13px, linking to monark.io) · project documentation and GitHub links.
 
@@ -100,8 +100,8 @@ Demo identities (chosen in the simulated wallet): **Élise Martel**, owner of 24
 
 Every signed action goes through the same simulated pipeline: wallet prompt (confirm or reject) → *Waiting for the network…* (1.5–3 s, with a progress line) → **Anchored in block #N** (confirmed) or **failed** (rejected in the wallet, or network failure forced by the demo controls), each with a retry.
 
-1. **Look up a lot (no wallet).** Search "36 rue des Érables" or "2 418 305", or click the lot on the plan → lot record opens: status *Violation*, coverage 46 % vs 40 % allowed → scrub back to 2019 and the rear extension disappears; 2024 it appears with a hatched "undeclared" outline → read the timeline: Maya's report (Mar 2024), Karim's confirmation (Apr 2024) → open the anchor. Empty state: "No lot matches '…'". Loading: skeleton while the local registry state hydrates. Unknown lot id: localized 404.
-2. **Declare a change (owner).** Connect as Élise → *Declare a change* on 24 rue des Érables → choose *Accessory building* → set 6 m × 4 m, one storey, 3.8 m → plan draws the dashed footprint; coverage meter rises to 38 % of 40 % (fits) → try 8 × 6 m: meter crosses the line, *Exceeds maximum lot coverage* warning, signing still allowed but flagged → attach a plan (simulated IPFS pin: uploading → pinned, CID shown) → review before/after → sign → pending → confirmed: *Declared. Awaiting attestation.* The lot turns *Under review*. Failed: wallet rejected, or network error with retry. Élise on a lot she doesn't own: "Only the owner of this lot can declare changes. You can report an irregularity instead."
+1. **Look up a lot (no wallet).** Search "36 rue des Érables" or "2 418 305", or click the lot on the plan → lot record opens: status *Violation*, coverage 45.4 % vs 40 % allowed, rear setback 4.0 m vs 7.5 m → scrub back to 2022 and the rear extension disappears → read the timeline: Maya's report (Mar 2024), Karim's inspection and confirmation (Apr 2024) → open the proof. Empty state: "No lot matches '…'". Loading: skeleton while the local registry state hydrates. Unknown lot id: localized 404.
+2. **Declare a change (owner).** Connect as Élise → *Declare a change* on 24 rue des Érables → choose *Accessory building* → set 6 m × 4 m in the back corner (1.5 m from the lines) → plan draws the dashed footprint; coverage meter rises from 29.5 % to 32.2 % of 40 % (fits) → try 12 × 9 m: the meter crosses the line at 41.8 %, *Outside the zone: lot coverage*, signing still allowed → attach a plan (simulated IPFS pin: uploading → pinned, CID shown) → review before/after → sign → pending → confirmed: *Declared. Awaiting attestation.* The lot turns *Under review*. Failed: wallet rejected, or network error with retry. Élise on a lot she doesn't own: "Only the owner of this lot can declare changes. You can report an irregularity instead."
 3. **Attest or dispute (inspector).** Switch to Karim → Review queue shows Élise's declaration and older pending ones (the Lemieux foundry redevelopment) → open one: before/after plan, zoning check, evidence → **Attest** (optional note, "grant a variance" when outside the rules), or **Dispute** (reason required) → sign → pending → confirmed: the seal stamps onto the entry with its block number; the lot status updates. Empty queue: "Nothing waiting. Every declaration and report has a decision."
 4. **Report an irregularity (resident).** Connect as Maya → lot 42 rue des Érables → *Report an irregularity* → category (undeclared structure, units differ from the record, too close to the lot line, safety concern) + description (+ optional photo, pinned to IPFS) → sign → confirmed: lot becomes *Under review* and the report joins Karim's queue. Guard: "You already have an open report on this lot." Karim then confirms (lot → *Violation*) or dismisses it.
 5. **Verify an entry.** Anyone → *Verify* → paste an entry ID or transaction hash (or pick an example) → proof card: block, timestamp, signer and role, recomputed content hash **matches** the anchored one, evidence CIDs, attestations. Error states: malformed input ("That's not an entry ID or a transaction hash"), unknown ("No entry is anchored under this hash on the demo network").
@@ -113,27 +113,28 @@ Tone: plain, exact and calm, like a good notary or a well-run city service. Shor
 The full copy lives in `src/i18n/dictionaries/en.ts` and `fr.ts`; the key sections:
 
 **Problem ("A lot's story is in four filing cabinets" / « L'histoire d'un lot dort dans quatre classeurs »)**
-- EN: "Permits sit at city hall, the cadastre at the land registry, inspection reports in a binder, and the rest in the seller's memory. When they disagree, the buyer finds out last."
-- FR : « Les permis sont à l'hôtel de ville, le cadastre au registre foncier, les rapports d'inspection dans un cartable, et le reste dans la mémoire du vendeur. Quand ils se contredisent, c'est l'acheteur qui l'apprend en dernier. »
+- EN: "When the permit office, the cadastre and the seller disagree, the buyer finds out last." Facts: **4** places a notary checks for one house · **0** of them show who changed what, and when · **1** public record in Cadastrum.
+- FR : « Quand le service des permis, le cadastre et le vendeur se contredisent, l'acheteur l'apprend en dernier. » Chiffres : **4** endroits à consulter par le notaire pour une maison · **0** d'entre eux montrent qui a changé quoi, et quand · **1** registre public avec Cadastrum.
 
-**Three outcomes**
+**Three outcomes** (copy kept for reference; after the restraint pass they are not a home section, the plan, the signatures and the diagram carry them)
 1. "Know what you're signing for" — "Every structure on a lot, when it appeared, who declared it and whether an inspector signed it off." / « Sachez ce que vous achetez » — « Chaque bâtiment d'un lot, depuis quand il existe, qui l'a déclaré et si un inspecteur l'a attesté. »
 2. "Declare once, for good" — "Your extension, its plans and its attestation, checkable by every future buyer, insurer or lender." / « Déclarez une fois pour toutes » — « Votre agrandissement, ses plans et son attestation, vérifiables par chaque futur acheteur, assureur ou prêteur. »
 3. "Nobody rewrites the file" — "Every entry is signed by a named role and anchored on-chain. Corrections are new entries, never overwrites." / « Personne ne réécrit le dossier » — « Chaque inscription est signée par un rôle identifié et ancrée on-chain. Une correction est une nouvelle inscription, jamais un effacement. »
 
-**One lot, three signatures** — "The owner declares. The inspector attests. The neighbour can report. Each signature is on the record, with who, what role and when." / « Une propriétaire déclare. Un inspecteur atteste. Une voisine peut signaler. Chaque signature reste au dossier : qui, à quel titre, et quand. »
+**One lot, three signatures** — "Each one stays on the record: who, in what role, and when." Steps: Owner "Declares the change: what was built, with its size and plans." · Inspector "Attests or disputes: checks it against the zone and the site, then signs." · Resident "Reports what's missing: a signed report opens a review in the open." / « Chacune reste au dossier : qui, à quel titre, et quand. » · « Déclare les travaux : ce qui a été bâti, avec ses dimensions et ses plans. » · « Atteste ou conteste : il compare avec le zonage et les lieux, puis signe. » · « Signale ce qui manque : un signalement signé ouvre une révision publique. »
 
-**What goes on-chain** — "The entry's content hash, the signer and the time go on-chain. Plans and photos go to IPFS, and only their fingerprint is anchored. Personal details stay off both." / « L'empreinte de l'inscription, le signataire et l'heure vont on-chain. Les plans et les photos vont sur IPFS, et seule leur empreinte est ancrée. Les renseignements personnels ne vont ni sur l'un ni sur l'autre. »
+**What goes on-chain** — "A hash, a signer and a time on-chain. Files on IPFS. Personal details on neither." / « Une empreinte, un signataire et une heure on-chain. Les fichiers sur IPFS. Les renseignements personnels, nulle part. »
 
 **FAQ** (EN / FR)
 1. *Does this replace the land registry?* No. The official cadastre still defines lots and ownership. Cadastrum records what happens on them: structures, changes, inspections, reports. / *Est-ce que ça remplace le registre foncier ?* Non. Le cadastre officiel définit toujours les lots et la propriété. Cadastrum consigne ce qui s'y passe : bâtiments, travaux, inspections, signalements.
 2. *Who can write to a lot's record?* Its owner (or their contractor) declares changes, municipal inspectors attest or dispute them, and any verified resident can file a report. Everyone can read. / *Qui peut écrire au dossier d'un lot ?* Le propriétaire (ou son entrepreneur) déclare les travaux, les inspecteurs municipaux les attestent ou les contestent, et tout résident vérifié peut signaler. Tout le monde peut lire.
 3. *What if an entry is wrong?* It's never edited. An inspector disputes it, or the owner declares a correction; both stay visible, in order. / *Et si une inscription est fausse ?* Elle n'est jamais modifiée. Un inspecteur la conteste ou le propriétaire déclare une correction ; les deux restent visibles, dans l'ordre.
 4. *Is my personal information on-chain?* No. The chain holds a content hash, a wallet address and a role. Names and contact details stay with the municipality. / *Mes renseignements personnels sont-ils on-chain ?* Non. La chaîne contient une empreinte, une adresse de portefeuille et un rôle. Les noms et coordonnées restent à la municipalité.
-5. *Do I pay a fee to declare something?* No. The municipality sponsors the network fees for declarations, attestations and reports. / *Faut-il payer pour déclarer ?* Non. La municipalité paie les frais de réseau des déclarations, attestations et signalements.
-6. *Can I rely on this for a purchase?* Not in this demo: the town, lots and people are fictional and nothing here is legal advice. In production, an attested entry is evidence to bring to your notary, not a substitute for one. / *Puis-je m'y fier pour un achat ?* Pas dans cette démo : la ville, les lots et les personnes sont fictifs, et rien ici n'est un avis juridique. En production, une inscription attestée est une preuve à apporter à votre notaire, pas un substitut.
+5. *Can I rely on this for a purchase?* Not in this demo: the town and its people are fictional. In production, an attested entry is evidence for your notary, not a substitute. / *Puis-je m'y fier pour un achat ?* Pas dans cette démo : la ville et ses habitants sont fictifs. En production, une inscription attestée est une preuve pour votre notaire, pas un substitut.
 
-**Closing CTA** — "Pick a lot. Scrub back to 1931." / « Choisissez un lot. Remontez jusqu'en 1931. » → "Open the registry" / « Ouvrir le registre ».
+(The FAQ lives on the home page only; "How it works" has none.)
+
+**Closing CTA** (under the aerial photo) — "Every lot on this street has a history." / « Chaque lot de cette rue a une histoire. » then "Pick a lot. Scrub back to 1931." / « Choisissez un lot. Remontez jusqu'en 1931. » → "Open the registry" / « Ouvrir le registre ».
 
 **Empty and error states** (all in both dictionaries): search no match; empty review queue; no entries yet on a lot; verify malformed / unknown; wallet rejected ("You declined the signature. Nothing was recorded." / « Vous avez refusé la signature. Rien n'a été inscrit. »); network failure ("The network didn't confirm the transaction. Nothing was recorded; you can try again." / « Le réseau n'a pas confirmé la transaction. Rien n'a été inscrit ; vous pouvez réessayer. »); not owner; duplicate report; 404 ("This lot isn't on the plan." / « Ce lot n'est pas au plan. »); generic error boundary.
 
@@ -169,7 +170,7 @@ Contrast (light / dark): foreground on background 14.46 / 14.78 · foreground on
 
 **Logo.** A mark drawn like a lot on a plan: a square boundary, a diagonal lot line splitting it, and a filled survey monument (dot) at one corner; wordmark "Cadastrum" in Public Sans 700. Favicon: the mark alone on registry green. Built in SVG (`src/components/site/logo.tsx`, `src/app/icon.svg`).
 
-**Shape.** Radius 4px (paper forms, not pills). 1px hairline borders do the structural work; no drop shadows except on overlays. Dashed lines mean *proposed or pending* (surveyors' convention); 45° hatching means *violation*; a solid fill means *attested*. Motion is short and purposeful: 180 ms ease-out on state, a 600 ms line-draw when a lot is selected, and the seal. Everything honours `prefers-reduced-motion`.
+**Shape.** Radius 4px (paper forms, not pills). 1px hairline borders do the structural work; no drop shadows except on overlays. Dashed lines mean *proposed or pending* (surveyors' convention); 45° hatching means *violation*; a solid fill means *attested*. Motion is short and purposeful: 180 ms ease-out on state, a 450 ms "ink-in" of the boundary when a lot is selected, and the seal. Everything honours `prefers-reduced-motion`.
 
 **Imagery.** Photography is used for places and people only, all top-down or at-work, warm daylight: an aerial of a street grid (the real-world counterpart of the plan), a surveyor at work in a city street, a house frame seen from above (a change in progress). Everything that explains the product is drawn in code: the plan, the timeline, the on-chain diagram, the lifecycle.
 
@@ -184,12 +185,12 @@ Contrast (light / dark): foreground on background 14.46 / 14.78 · foreground on
 
 | Asset | Purpose and placement |
 |-|-|
-| `public/images/aerial-street-grid.jpg` (Tom Rumble, Unsplash) | Home: aerial band ("Every lot on this street has a story"). |
+| `public/images/aerial-street-grid.jpg` (Tom Rumble, Unsplash) | Home: closing call to action ("Every lot on this street has a history"). |
 | `public/images/surveyor-street.jpg` (Agustín Pimentel, Unsplash) | Home: "One lot, three signatures" section; how-it-works header. |
-| `public/images/frame-from-above.jpg` (Avel Chuklanov, Unsplash) | Home: problem section / how-it-works "a change in progress". |
+| `public/images/frame-from-above.jpg` (Avel Chuklanov, Unsplash) | Home: problem section. |
 | Neighbourhood plan (SVG, code) | Hero, explorer, lot record, declare, review. |
-| On-chain diagram (SVG, code) | Home and how-it-works. |
-| Lifecycle diagram (SVG, code) | How-it-works. |
+| On-chain diagram (HTML/CSS, code) | Home. |
+| Lifecycle diagram (HTML/CSS, code) | How-it-works. |
 | Seal (SVG, code) | Lot timeline, review. |
 | Logo mark + favicon (SVG) | Header, footer, `icon.svg`, OG image. |
 | Open Graph image (`opengraph-image.tsx`) | Per locale, product name + headline + mini plan. |
@@ -222,5 +223,10 @@ Reasoning: municipalities already pay for land-records and permit software and b
 (Updated while building.)
 
 - **Fictional municipality.** Val-des-Ormes and its people are fictional so the demo never impersonates a real city registry. Lot numbers follow the Québec cadastre style (7 digits, "2 418 305").
-- **Disclaimer wording.** Nothing in Cadastrum moves value, so the §11 "not financial advice" line is adapted to "Testnet demo · not legal advice · no real records" next to every signing action; "Demo · simulated data" is in the footer and the app bar.
-- **Geometry in metres.** The plan's SVG units are metres, so coverage, setbacks and heights are computed on the same geometry that's drawn.
+- **Disclaimer wording and placement.** Nothing in Cadastrum moves value, so the §11 "not financial advice" line is adapted to "Testnet demo · not legal advice · no real records". It appears once per transaction, in the signature prompt. "Demo · simulated data" is in the footer, with a small "Demo" chip in the header (and the notice in the mobile menu).
+- **Geometry in metres.** The plan's SVG units are metres, so coverage, setbacks and heights are computed on the same geometry that's drawn. Labels are an HTML overlay so they stay legible at 360 px.
+- **Accessory buildings.** Garages, sheds and workshops need 1 m from side and rear lines (a common Québec by-law pattern); main buildings use the zone's setbacks. This is what makes the 17 rue du Moulin shed a variance and the 36 rue des Érables extension a violation.
+- **Lot status is derived, never stored.** `registry.ts` computes it from entries, decisions and reports at any date, so the year scrubber, the explorer and the lot record always agree. A confirmed report or a disputed entry stays a violation until a newer declaration is attested.
+- **Restraint pass (owner feedback).** Cut: the hero eyebrow and "things to try" list, the three-outcomes card section (home now has five sections after the hero), one FAQ question, explanatory paragraphs above the declare/review/report forms, the repeated archive note on every imported entry, the status explanations under badges (now an info icon), the IPFS and content-hash explanations (info icons), and the duplicate demo strip in the app bar. Hero line shortened to 19 words.
+- **Wallet avatars** (`@monark/ui` `wallet`) render their Jazzicon after hydration, because its floating-point output differs between Node and browsers.
+- **`/pricing`** is excluded from the sitemap and marked `noindex, nofollow`; it is not listed in `robots.txt` either, so nothing public points at it.
