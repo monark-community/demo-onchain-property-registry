@@ -154,7 +154,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <p className="text-primary-foreground/80">{h.aerial.line}</p>
               <h2 className="mt-1 text-3xl font-bold sm:text-4xl">{h.cta.title}</h2>
             </div>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-primary-foreground text-primary hover:bg-primary-foreground/90 hover:text-primary">
+            <Button asChild size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
               <Link href={href(locale, "/app")}>
                 {h.cta.button}
                 <ArrowRightIcon aria-hidden="true" />
