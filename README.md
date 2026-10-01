@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# Cadastrum
 
-## Project info
+**The public record of every lot and every structure on it.** Owners declare changes, municipal inspectors attest or dispute them, residents can report what's missing, and every entry is anchored on-chain so anyone can check a property's history before they buy, rent or build.
 
-**URL**: https://lovable.dev/projects/b631b93c-bd6a-4f79-a6ce-ff905609198f
+This repository is the interactive demo, set in the fictional town of Val-des-Ormes (Québec). Everything is simulated in the browser: no real chain, wallet, IPFS or backend.
 
-## How can I edit this code?
+- Project documentation: https://www.monark.io/en/project/onchain-property-registry
+- Site plan (product brief, identity, flows, copy): [`docs/site-plan.md`](docs/site-plan.md)
+- Assets and credits: [`docs/assets.md`](docs/assets.md)
+- Screenshots: [`docs/screenshots/`](docs/screenshots/)
 
-There are several ways of editing your application.
+Cadastrum is an independent product incubated by [Monark](https://www.monark.io).
 
-**Use Lovable**
+## What you can do in the demo
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b631b93c-bd6a-4f79-a6ce-ff905609198f) and start prompting.
+1. **Look up a lot**: search an address or a lot number, open its record, drag the year scrubber from 1931 to today and watch structures appear and disappear.
+2. **Declare a change** (as Élise, the owner of 24 rue des Érables): pick a change, size it on the plan, see the zoning check move, attach a plan (pinned to IPFS), sign.
+3. **Attest or dispute** (as Karim, the city's inspector): review the queue, attest, attest with a variance, or dispute with a reason; the seal stamps onto the record.
+4. **Report an irregularity** (as Maya, a resident): file a signed report; the lot goes under review.
+5. **Verify an entry**: paste an entry ID or a transaction hash; the content hash is recomputed and compared with the anchored one.
 
-Changes made via Lovable will be committed automatically to this repo.
+Every signed action shows the wallet prompt and a pending, confirmed, rejected or failed state. The **Demo controls** (in the app bar) can force the next transaction to fail, slow the network, or reset the demo.
 
-**Use your preferred IDE**
+## Run it locally
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requirements: Node 22 and pnpm 10.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+pnpm install
+pnpm dev          # http://localhost:3150
 ```
 
-**Edit a file directly in GitHub**
+Checks and production build:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+pnpm lint
+pnpm typecheck
+pnpm build && pnpm start   # http://localhost:3150
+```
 
-**Use GitHub Codespaces**
+No environment variables are needed. `NEXT_PUBLIC_SITE_URL` optionally overrides the canonical URL used in metadata and the sitemap (default `https://cadastrum.monark.io`).
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Screenshots (with the production server running): `pnpm screenshots` writes to `docs/screenshots/`.
 
-## What technologies are used for this project?
+## How the simulation works
 
-This project is built with:
+All demo logic lives in [`src/lib/demo/`](src/lib/demo), behind small typed functions, so it could be replaced by wagmi/viem, a pinning service and an indexer without touching the UI:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| File | Role |
+|-|-|
+| `types.ts` | Domain types: lots, structures, changes, entries, decisions, reports, anchors. |
+| `world.ts` | The fictional neighbourhood: streets, 20 lots (geometry in metres), zoning rules, people and roles. |
+| `seed.ts` | The seed registry: archive imports since 1931 plus the stories (an undeclared extension, a variance, a disputed basement unit, a rezoned foundry). |
+| `registry.ts` | Pure derivations: structures at a date, coverage/height/units/setbacks against the zone, lot status (compliant, variance, under review, violation). |
+| `chain.ts` / `hash.ts` | Simulated anchoring: block numbers on a 12 s clock, deterministic content hashes and transaction hashes, IPFS-style CIDs, network latency and failures. |
+| `ops.ts` | State transitions applied after a transaction confirms: declare, decide, file and resolve reports. |
+| `store.ts` | A tiny external store persisted to `localStorage` (every access wrapped in try/catch); the server and first render always use the seed so pages prerender cleanly. |
 
-## How can I deploy this project?
+The wallet is a set of three pre-verified demo identities (owner, inspector, resident). Signing never costs anything: network fees are presented as sponsored by the municipality.
 
-Simply open [Lovable](https://lovable.dev/projects/b631b93c-bd6a-4f79-a6ce-ff905609198f) and click on Share -> Publish.
+## Project structure
 
-## Can I connect a custom domain to my Lovable project?
+```
+src/
+  app/[locale]/          routes (en, fr): home, how-it-works, credits, pricing (unlinked), 404
+  app/[locale]/app/      the registry: explorer, lots/[id], declare, review, verify
+  components/plan/       the SVG plan, legend and year scrubber
+  components/registry/   lot record, declare flow, review queue, reports, verification, seal
+  components/demo/       simulated wallet, signature prompt, transaction feedback, demo controls
+  components/site/       header, footer, logo, language and theme switches
+  components/ui/         shadcn/ui and @monark/ui registry components, re-themed
+  i18n/                  typed EN/FR dictionaries
+  lib/demo/              the simulated data layer (see above)
+  proxy.ts               redirects / to the visitor's language
+```
 
-Yes, you can!
+## Deploy to Vercel
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Import the repository in Vercel and deploy with the framework defaults (Next.js, pnpm). No `vercel.json` and no environment variables are required; every page is prerendered.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Disclaimer
+
+Demo · simulated data. Val-des-Ormes, its lots and its people are fictional. Nothing here is legal advice.
