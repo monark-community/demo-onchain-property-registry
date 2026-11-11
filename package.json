@@ -5,7 +5,9 @@
   "description": "Cadastrum: the public record of every lot and every structure on it, declared by owners, attested by inspectors and anchored on-chain (simulated demo).",
   "scripts": {
     "dev": "next dev --port 3150",
+    "prebuild": "node scripts/check-node.mjs",
     "build": "next build",
+    "prestart": "node scripts/check-node.mjs",
     "start": "next start --port 3150",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
