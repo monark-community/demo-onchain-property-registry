@@ -23,7 +23,7 @@ Every signed action shows the wallet prompt and a pending, confirmed, rejected o
 
 ## Run it locally
 
-Requirements: Node 22 and pnpm 10.
+Requirements: Node 22.23.4 or newer on the 22 line and pnpm 10.
 
 ```sh
 pnpm install
@@ -76,7 +76,7 @@ src/
 
 ## Deploy to Vercel
 
-Import the repository in Vercel and deploy with the framework defaults (Next.js, pnpm). No `vercel.json` and no environment variables are required; every page is prerendered.
+Import the repository in Vercel and deploy with the framework defaults (Next.js, pnpm). No `vercel.json` and no environment variables are required; every page is prerendered. `pnpm build` and `pnpm start` stop on a Node release exposed to CVE-2026-111497.
 
 ## Disclaimer
 
